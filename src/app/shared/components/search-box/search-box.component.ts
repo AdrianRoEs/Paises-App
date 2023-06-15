@@ -1,0 +1,26 @@
+import { Component, Input, Output, EventEmitter} from '@angular/core';
+
+
+@Component({
+  selector: 'shared-search-box',
+  templateUrl: './search-box.component.html',
+  styles: [
+  ]
+})
+export class SearchBoxComponent {
+
+  constructor() { }
+
+
+@Input()
+public placeholder : string='';
+
+
+@Output()
+public OnValue= new EventEmitter<string>()
+
+emitValue(value: string): void{
+  this.OnValue.emit(value);
+}
+
+}
