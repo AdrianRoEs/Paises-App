@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CountriesService } from '../../services/countries.service';
 import { Country } from '../../interfaces/countries';
+import { Region } from '../../interfaces/region.type';
+
 
 @Component({
   selector: 'app-by-region-page',
@@ -8,15 +10,28 @@ import { Country } from '../../interfaces/countries';
   styles: [
   ]
 })
-export class ByRegionPageComponent  {
+export class ByRegionPageComponent implements OnInit {
 
-  
+ 
 public countries : Country[]=[];
+
+public regions: Region[]=['Africa','America','Asia','Europe','Oceania'];
+public selectedRegion?: Region;
+public initialValue: string='';
 
 constructor( private CountriesServicerce: CountriesService){}
 
+ngOnInit(): void {
+  this.countries= this.CountriesServicerce.cacheStore.byRegion.countries,
+  this.selectedRegion= this.CountriesServicerce.cacheStore.byRegion.region
+  
+}
 
-searchByRegion(region: string): void {
+
+searchByRegion(region: Region): void {
+   
+  this.selectedRegion= region;
+
  this.CountriesServicerce.searchRegion(region)
  .subscribe( countries =>{
   this.countries = countries
